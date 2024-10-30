@@ -3,11 +3,22 @@ import { Status } from '../../../types/status';
 import { TaskManagerColumnHeaderComponent } from '../taskmanagercolumnheader/taskmanagercolumnheader-component';
 import { TaskItemComponent } from '../taskitem/taskitem.component';
 import { TaskService } from '../../services/taskservice';
+import {
+  CdkDragDrop,
+  CdkDropList,
+  CdkDrag,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'task-manager-column',
   standalone: true,
-  imports: [TaskManagerColumnHeaderComponent, TaskItemComponent],
+  imports: [
+    TaskManagerColumnHeaderComponent,
+    TaskItemComponent,
+    CdkDropList,
+    CdkDrag,
+  ],
   templateUrl: './taskmanagercolumn.component.html',
 })
 export class TaskManagerColumnComponent {
@@ -17,4 +28,8 @@ export class TaskManagerColumnComponent {
   taskService = inject(TaskService);
 
   tasks = computed(() => this.taskService.tasksByStatus(this.columnType));
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.tasks(), event.previousIndex, event.currentIndex);
+  }
 }

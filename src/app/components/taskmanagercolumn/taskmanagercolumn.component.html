@@ -1,4 +1,6 @@
 <task-manager-column-header [columnType]=columnType />
-@for(task of tasks(); track task.id) {
-        <task-item title={{task.title}} createdDate={{task.createdAt}}/>
-}
+<div cdkDropList (cdkDropListDropped)="drop($event)">
+        @for(task of tasks(); track task.id) {
+                <task-item title={{task.title}} createdDate={{task.createdAt}} cdkDrag/>
+        }
+</div>
