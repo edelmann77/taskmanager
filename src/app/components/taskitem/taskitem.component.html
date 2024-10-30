@@ -1,8 +1,8 @@
-<div class="max-w-sm rounded overflow-hidden shadow-lg p-1 mt-2 border-gray-400 border-2">
+<div class="flex flex-col justify-between max-w-sm rounded overflow-hidden shadow-lg p-1 mt-2 border-gray-400 border-2 bg-slate-100 h-24">
     <div>
-        <span>{{title}}</span>
+        <span class="text-lg">{{title}}</span>
     </div>
-    <div>
-        <span>Created: {{createdDate | date:'dd-MM-yyyy'}}</span>
+    <div class="flex justify-end">
+        <span class="text-xs">Created: {{createdDate | date:'dd-MM-yyyy hh:mm'}}</span>
     </div>
 </div>
