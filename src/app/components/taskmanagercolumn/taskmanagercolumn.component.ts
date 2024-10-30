@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input } from '@angular/core';
+import { Component, signal, inject, Input } from '@angular/core';
 import { Status } from '../../../types/status';
 import { TaskManagerColumnHeaderComponent } from '../taskmanagercolumnheader/taskmanagercolumnheader-component';
 import { TaskItemComponent } from '../taskitem/taskitem.component';
@@ -27,9 +27,18 @@ export class TaskManagerColumnComponent {
 
   taskService = inject(TaskService);
 
-  tasks = computed(() => this.taskService.tasksByStatus(this.columnType));
+  tasks = signal(() => this.taskService.tasksByStatus(this.columnType));
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.tasks(), event.previousIndex, event.currentIndex);
+  drop(event: CdkDragDrop<Status[]>) {
+    if (event.container === event.previousContainer) {
+      moveItemInArray(this.tasks()(), event.previousIndex, event.currentIndex);
+    } else {
+      const moveTo = event.container.data[0];
+      const moveFrom = event.previousContainer.data[0];
+
+      if (this.taskService.canMove(moveFrom, moveTo)) {
+        this.taskService.updateStatus(event.item.data.id, moveTo);
+      }
+    }
   }
 }

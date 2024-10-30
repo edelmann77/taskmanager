@@ -36,4 +36,25 @@ export class TaskService {
   tasksByStatus = (status: Status) => {
     return this.tasks.filter((task) => task.status === status);
   };
+
+  canMove = (from: Status, to: Status): boolean => {
+    switch (from) {
+      case 'Todo': {
+        return to === 'In Progress';
+      }
+      case 'In Progress': {
+        return to === 'Completed';
+      }
+      case 'Completed': {
+        return false;
+      }
+    }
+  };
+
+  updateStatus = (taskId: string, status: Status) => {
+    const task = this.tasks.find((t) => t.id === taskId);
+    if (task) {
+      task.status = status;
+    }
+  };
 }
