@@ -1,1 +1,6 @@
-<task-manager-column-header [columnType]=columnType />
+@for(task of tasks(); track task.id) {
+    <div>
+        <task-manager-column-header [columnType]=columnType />
+        <task-item title={{task.title}} createdDate={{task.createdAt}}/>
+    </div>
+}

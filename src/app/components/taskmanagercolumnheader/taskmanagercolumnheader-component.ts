@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Column } from '../../../types/column';
+import { Status } from '../../../types/status';
 
 @Component({
   selector: 'task-manager-column-header',
@@ -8,5 +8,5 @@ import { Column } from '../../../types/column';
   templateUrl: './taskmanagercolumnheader.component.html',
 })
 export class TaskManagerColumnHeaderComponent {
-  @Input() columnType: Column = 'Todo';
+  @Input() columnType: Status = 'Todo';
 }
