@@ -1,10 +1,4 @@
-<task-manager-column-header [columnType]=columnType />
-<div
-        cdkDropList
-        [cdkDropListData]=[columnType] 
-        (cdkDropListDropped)="drop($event)"
-        >
-        @for(task of tasks()(); track task.id) {
-                <task-item title={{task.title}} createdDate={{task.createdAt}} cdkDrag [cdkDragData]="task"/>
-        }
+<div class="w-80">
+        <task-manager-column-header [columnType]=columnType />
+        <task-item-panel [columnType]="columnType" />
 </div>
