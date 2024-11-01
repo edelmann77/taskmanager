@@ -20,7 +20,6 @@ export class TaskItemComponent {
   onClick = () => {
     if (this.task) {
       this.dialog.open(EditDialogComponent, { data: { task: this.task } });
-      // this.taskService.updateTask(this.task.id, this.task);
     }
   };
 }

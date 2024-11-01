@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class TaskService {
-  tasks: Task[] = [
+  readonly tasks: Task[] = [
     {
       createdAt: new Date(),
       id: '1',
@@ -58,13 +58,6 @@ export class TaskService {
     }
   };
 
-  updateStatus = (taskId: string, status: Status) => {
-    const task = this.tasks.find((t) => t.id === taskId);
-    if (task) {
-      task.status = status;
-    }
-  };
-
   createNewTask = (title: string, description: string, status?: Status) => {
     this.tasks.push({
       title: title,
@@ -75,7 +68,10 @@ export class TaskService {
     });
   };
 
-  updateTask = (taskId: string, toUpdate: Partial<Task>) => {
+  updateTask = (
+    taskId: string,
+    toUpdate: Partial<Omit<Task, 'id' | 'createdAt'>>
+  ) => {
     const index = this.tasks.findIndex((task) => task.id === taskId);
     this.tasks[index] = { ...this.tasks[index], ...toUpdate };
   };

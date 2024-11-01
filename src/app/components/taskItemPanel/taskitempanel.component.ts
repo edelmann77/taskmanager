@@ -30,7 +30,7 @@ export class TaskItemPanelComponent {
       const moveFrom = event.previousContainer.data[0];
 
       if (this.taskService.canMove(moveFrom, moveTo)) {
-        this.taskService.updateStatus(event.item.data.id, moveTo);
+        this.taskService.updateTask(event.item.data.id, { status: moveTo });
       }
     }
   }
