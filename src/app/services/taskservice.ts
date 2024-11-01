@@ -12,24 +12,31 @@ export class TaskService {
       id: '1',
       status: 'Todo',
       title: 'Present taskmanager application',
+      description: 'Present taskmanager application to Lead developer @ Vestas',
     },
     {
       createdAt: new Date(),
       id: '2',
       status: 'In Progress',
       title: 'Make items dragndroppable',
+      description:
+        'We need to be able to drag and drop a task, so that we can change status',
     },
     {
       createdAt: new Date(),
       id: '3',
       status: 'Completed',
       title: 'Create columns',
+      description:
+        'Create 3 columns. 1 for each status. A column should act as a drop target.',
     },
     {
       createdAt: new Date(),
       id: '4',
       status: 'Completed',
       title: 'Create task items',
+      description:
+        'We need to be able to represent a task as an item in the UI',
     },
   ];
 
@@ -56,5 +63,15 @@ export class TaskService {
     if (task) {
       task.status = status;
     }
+  };
+
+  createNewTask = (title: string, description: string, status?: Status) => {
+    this.tasks.push({
+      title: title,
+      description: description,
+      status: status ?? 'Todo',
+      id: `${new Date().getUTCMilliseconds()}`,
+      createdAt: new Date(),
+    });
   };
 }

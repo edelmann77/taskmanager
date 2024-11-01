@@ -5,6 +5,12 @@ class="min-h-[100px] flex flex-col space-y-4"
     (cdkDropListDropped)="drop($event)"
     >
     @for(task of tasks()(); track task.id) {
-            <task-item title={{task.title}} createdDate={{task.createdAt}} cdkDrag [cdkDragData]="task"/>
+            <task-item 
+                title={{task.title}} 
+                createdDate={{task.createdAt}} 
+                description={{task.description}} 
+                cdkDrag 
+                [cdkDragData]="task"
+            />
     }
 </div>
