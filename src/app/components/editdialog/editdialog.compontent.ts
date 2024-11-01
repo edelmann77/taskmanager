@@ -10,6 +10,7 @@ import { TaskService } from '../../services/taskservice';
 import { Status } from '../../../types/status';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../../../types/task';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'edit-dialog',
@@ -27,6 +28,7 @@ import { Task } from '../../../types/task';
 export class EditDialogComponent {
   readonly dialogRef = inject(MatDialogRef<EditDialogComponent>);
   readonly taskService = inject(TaskService);
+  readonly snackbar = inject(MatSnackBar);
 
   readonly data = inject<{ task?: Task } | undefined>(MAT_DIALOG_DATA);
   readonly title = model(this.data?.task?.title ?? '');
@@ -46,6 +48,8 @@ export class EditDialogComponent {
     }
 
     this.dialogRef.close();
+
+    this.openSnackbar('Task deleted');
   };
 
   onCreateClicked = () => {
@@ -56,6 +60,7 @@ export class EditDialogComponent {
     );
 
     this.dialogRef.close();
+    this.openSnackbar('Task created');
   };
 
   onSaveClicked = () => {
@@ -67,6 +72,16 @@ export class EditDialogComponent {
         status: this.status() as Status,
       });
     }
+
     this.dialogRef.close();
+    this.openSnackbar('Task updated');
+  };
+
+  openSnackbar = (message: string) => {
+    this.snackbar.open(message, '', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   };
 }
