@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { Component, inject, model, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -8,6 +8,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskService } from '../../services/taskservice';
 import { Status } from '../../../types/status';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Task } from '../../../types/task';
 
 @Component({
   selector: 'edit-dialog',
@@ -26,28 +28,45 @@ export class EditDialogComponent {
   readonly dialogRef = inject(MatDialogRef<EditDialogComponent>);
   readonly taskService = inject(TaskService);
 
-  taskForm = new FormGroup({
-    title: new FormControl(''),
-    description: new FormControl(''),
-    status: new FormControl('Todo'),
-  });
+  readonly data = inject<{ task?: Task } | undefined>(MAT_DIALOG_DATA);
+  readonly title = model(this.data?.task?.title ?? '');
+  readonly description = model(this.data?.task?.description ?? '');
+  readonly status = model(this.data?.task?.status ?? '');
+
+  context = signal(() => (this.data?.task ? 'Edit' : 'Create'));
 
   onCancelClicked = () => {
     this.dialogRef.close();
   };
 
   onDeleteClicked = () => {
-    //delete
+    const task = this.data?.task;
+    if (task) {
+      this.taskService.deleteTask(task.id);
+    }
+
     this.dialogRef.close();
   };
 
-  handleSubmit = () => {
+  onCreateClicked = () => {
     this.taskService.createNewTask(
-      this.taskForm.value.title ?? '',
-      this.taskForm.value.description ?? '',
-      (this.taskForm.value.status as Status) ?? undefined
+      this.title(),
+      this.description(),
+      (this.status() as Status) ?? undefined
     );
 
+    this.dialogRef.close();
+  };
+
+  onSaveClicked = () => {
+    const task = this.data?.task;
+    if (task) {
+      this.taskService.updateTask(task.id, {
+        description: this.description(),
+        title: this.title(),
+        status: this.status() as Status,
+      });
+    }
     this.dialogRef.close();
   };
 }

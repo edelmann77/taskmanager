@@ -1,11 +1,14 @@
-<div class="flex flex-col justify-between max-w-sm rounded overflow-hidden shadow-lg p-1 border-gray-400 border-2 bg-slate-100 hover:bg-slate-200 h-24 cursor-pointer ">
+<div 
+    (click)="onClick()"
+    class="flex flex-col justify-between max-w-sm rounded overflow-hidden shadow-lg p-1 border-gray-400 border-2 bg-slate-100 hover:bg-slate-200 h-24 cursor-pointer "
+    >
     <div>
-        <div class="text-lg truncate">{{title}}</div>
+        <div class="text-lg truncate">{{task?.title ?? ''}}</div>
     </div>
     <div class="mr-[50px]">
-        <div class="text-[12px] truncate ">{{description}}</div>
+        <div class="text-[12px] truncate ">{{task?.description ?? ""}}</div>
     </div>
     <div class="flex justify-end">
-        <div class="text-xs">Created {{createdDate | date:'dd-MM-yyyy HH:mm'}}</div>
+        <div class="text-xs">Created {{task?.createdAt | date:'dd-MM-yyyy HH:mm'}}</div>
     </div>
 </div>

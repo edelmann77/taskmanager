@@ -74,4 +74,14 @@ export class TaskService {
       createdAt: new Date(),
     });
   };
+
+  updateTask = (taskId: string, toUpdate: Partial<Task>) => {
+    const index = this.tasks.findIndex((task) => task.id === taskId);
+    this.tasks[index] = { ...this.tasks[index], ...toUpdate };
+  };
+
+  deleteTask = (taskId: string) => {
+    const index = this.tasks.findIndex((task) => task.id === taskId);
+    this.tasks.splice(index, 1);
+  };
 }

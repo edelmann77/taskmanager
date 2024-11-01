@@ -18,7 +18,7 @@ import { TaskItemComponent } from '../taskitem/taskitem.component';
 export class TaskItemPanelComponent {
   @Input() columnType: Status = 'Todo';
 
-  taskService = inject(TaskService);
+  readonly taskService = inject(TaskService);
 
   tasks = signal(() => this.taskService.tasksByStatus(this.columnType));
 

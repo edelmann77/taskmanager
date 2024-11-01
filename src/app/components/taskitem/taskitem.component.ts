@@ -1,5 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { TaskService } from '../../services/taskservice';
+import { Task } from '../../../types/task';
+import { MatDialog } from '@angular/material/dialog';
+import { EditDialogComponent } from '../editdialog/editdialog.compontent';
 
 @Component({
   selector: 'task-item',
@@ -8,7 +12,15 @@ import { DatePipe } from '@angular/common';
   templateUrl: './taskitem.component.html',
 })
 export class TaskItemComponent {
-  @Input() title = '';
-  @Input() description = '';
-  @Input() createdDate = '';
+  @Input() task: Task | undefined;
+
+  readonly taskService = inject(TaskService);
+  readonly dialog = inject(MatDialog);
+
+  onClick = () => {
+    if (this.task) {
+      this.dialog.open(EditDialogComponent, { data: { task: this.task } });
+      // this.taskService.updateTask(this.task.id, this.task);
+    }
+  };
 }
