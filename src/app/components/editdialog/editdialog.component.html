@@ -26,7 +26,7 @@
         <button class="mr-5 bg-green-600" mat-flat-button type="button" (click)="onCreateClicked()">Create</button>
         }
         @if (context()() === "Edit") {
-            <button class="mr-5 bg-green-600" mat-flat-button type="button" (click)="onSaveClicked()">Save</button>
+            <button id="save-button" class="mr-5 bg-green-600" mat-flat-button type="button" (click)="onSaveClicked()">Save</button>
             <button class="mr-5 bg-red-700" mat-flat-button type="button" (click)="onDeleteClicked()">Delete</button>
         }
         <button mat-button (click)="onCancelClicked()" type="button">Cancel</button>
