@@ -1,12 +1,16 @@
-<div cdkDropListGroup class="flex">
-    <div class="me-5">
-        <task-manager-column columnType="Todo" />
-    </div>
-    <div class="me-5">
-        <task-manager-column columnType="In Progress" />
-    </div>
+<div class="w-full h-full flex justify-center pt-5 bg-gray-200">
     <div>
-        <task-manager-column columnType="Completed" />
+        <div cdkDropListGroup class="flex">
+            <div class="me-5">
+                <task-manager-column columnType="Todo" />
+            </div>
+            <div class="me-5">
+                <task-manager-column columnType="In Progress" />
+            </div>
+            <div>
+                <task-manager-column columnType="Completed" />
+            </div>
+        </div>
+        <button class="mt-5" mat-flat-button (click)="openDialog()">Create new task</button>
     </div>
 </div>
-<button mat-flat-button (click)="openDialog()">Create new task</button>
