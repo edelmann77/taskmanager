@@ -20,7 +20,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+To run the e2e test, you will need to have testcafe installed on your local PC. A guide to do this can be found [here](https://testcafe.io/documentation/402635/guides/overview/getting-started#install-testcafe). The testcage test fixtures can be found in src/e2e
 
 ## Further help
 

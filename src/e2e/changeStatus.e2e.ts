@@ -9,7 +9,6 @@ test('can change status from Todo to In Progress', async (t) => {
       400,
       0
     )
-
     .expect(
       taskManagerPage.columnHeaderSection('Present taskmanager application').id
     )
