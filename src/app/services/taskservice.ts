@@ -59,16 +59,20 @@ export class TaskService {
     return this.tasksToDisplay()().filter((task) => task.status === status);
   };
 
-  canMove = (from: Status, to: Status): boolean => {
+  canMove = (from: Status | undefined, to: Status): boolean => {
+    if (!from) {
+      return true;
+    }
+
     switch (from) {
       case 'Todo': {
-        return to === 'In Progress';
+        return to === 'In Progress' || to === 'Todo';
       }
       case 'In Progress': {
-        return to === 'Completed';
+        return to === 'Completed' || to === 'In Progress';
       }
       case 'Completed': {
-        return false;
+        return to === 'Completed';
       }
     }
   };

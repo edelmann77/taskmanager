@@ -15,9 +15,15 @@
         <mat-form-field class="w-full">
             <mat-label>Status</mat-label>
             <mat-select [(ngModel)]="status">
-                <mat-option value="Todo">Todo</mat-option>
-                <mat-option value="In Progress">In Progress</mat-option>
-                <mat-option value="Completed">Completed</mat-option>
+                @if(taskService.canMove(data?.task?.status, "Todo")){
+                    <mat-option value="Todo">Todo</mat-option>
+                }
+                @if(taskService.canMove(data?.task?.status, "In Progress")){
+                    <mat-option value="In Progress">In Progress</mat-option>
+                }
+                @if(taskService.canMove(data?.task?.status, "Completed")) {
+                    <mat-option value="Completed">Completed</mat-option>
+                }
             </mat-select>
         </mat-form-field> 
     </div>
