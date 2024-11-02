@@ -5,7 +5,7 @@ describe('TaskService', () => {
   describe('tasksByStatus', () => {
     beforeEach(() => {
       taskService = new TaskService();
-      taskService.tasks.push(
+      taskService.allTasks.push(
         {
           createdAt: new Date(),
           id: '1000',
@@ -89,7 +89,7 @@ describe('TaskService', () => {
     it('can create a new task', () => {
       taskService.createNewTask('TestTitle', 'TestDescription', 'Todo');
 
-      const filteredTasks = taskService.tasks.filter(
+      const filteredTasks = taskService.allTasks.filter(
         (task) =>
           task.title === 'TestTitle' &&
           task.description === 'TestDescription' &&
@@ -103,7 +103,7 @@ describe('TaskService', () => {
   describe('updateTask', () => {
     beforeEach(() => {
       taskService = new TaskService();
-      taskService.tasks.push({
+      taskService.allTasks.push({
         id: '1337',
         createdAt: new Date(),
         description: 'This is a description',
@@ -117,7 +117,7 @@ describe('TaskService', () => {
         description: 'This is another description',
       });
 
-      const task = taskService.tasks.find((task) => task.id === '1337');
+      const task = taskService.allTasks.find((task) => task.id === '1337');
 
       expect(task?.description).toBe('This is another description');
       expect(task?.title).toBe('This is a title');
@@ -128,7 +128,7 @@ describe('TaskService', () => {
         title: 'This is another title',
       });
 
-      const task = taskService.tasks.find((task) => task.id === '1337');
+      const task = taskService.allTasks.find((task) => task.id === '1337');
 
       expect(task?.description).toBe('This is a description');
       expect(task?.title).toBe('This is another title');
@@ -139,7 +139,7 @@ describe('TaskService', () => {
         status: 'Completed',
       });
 
-      const task = taskService.tasks.find((task) => task.id === '1337');
+      const task = taskService.allTasks.find((task) => task.id === '1337');
 
       expect(task?.description).toBe('This is a description');
       expect(task?.title).toBe('This is a title');
@@ -150,7 +150,7 @@ describe('TaskService', () => {
   describe('deleteTask', () => {
     beforeEach(() => {
       taskService = new TaskService();
-      taskService.tasks.push({
+      taskService.allTasks.push({
         id: '1337',
         createdAt: new Date(),
         description: 'This is a description',
@@ -162,7 +162,9 @@ describe('TaskService', () => {
     it('can delete tasks', () => {
       taskService.deleteTask('1337');
 
-      const deletedTask = taskService.tasks.find((task) => task.id === '1337');
+      const deletedTask = taskService.allTasks.find(
+        (task) => task.id === '1337'
+      );
 
       expect(deletedTask).toBeUndefined();
     });

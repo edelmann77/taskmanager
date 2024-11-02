@@ -5,7 +5,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TaskService } from '../../services/taskservice';
 import { Status } from '../../../types/status';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -22,7 +21,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    ReactiveFormsModule,
   ],
 })
 export class EditDialogComponent {

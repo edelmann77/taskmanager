@@ -1,12 +1,14 @@
 import { Task } from '../../types/task';
 import { Status } from '../../types/status';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  readonly tasks: Task[] = [
+  searchString: string = '';
+
+  readonly allTasks: Task[] = [
     {
       createdAt: new Date(),
       id: '1',
@@ -40,8 +42,21 @@ export class TaskService {
     },
   ];
 
+  tasksToDisplay = signal(() => {
+    if (this.searchString === '') {
+      return this.allTasks;
+    }
+
+    return this.allTasks.filter((task) => {
+      return (
+        task.title?.toLowerCase().includes(this.searchString.toLowerCase()) ||
+        task.status.toLowerCase().includes(this.searchString.toLowerCase())
+      );
+    });
+  });
+
   tasksByStatus = (status: Status) => {
-    return this.tasks.filter((task) => task.status === status);
+    return this.tasksToDisplay()().filter((task) => task.status === status);
   };
 
   canMove = (from: Status, to: Status): boolean => {
@@ -59,7 +74,7 @@ export class TaskService {
   };
 
   createNewTask = (title: string, description: string, status?: Status) => {
-    this.tasks.push({
+    this.allTasks.push({
       title: title,
       description: description,
       status: status ?? 'Todo',
@@ -72,12 +87,16 @@ export class TaskService {
     taskId: string,
     toUpdate: Partial<Omit<Task, 'id' | 'createdAt'>>
   ) => {
-    const index = this.tasks.findIndex((task) => task.id === taskId);
-    this.tasks[index] = { ...this.tasks[index], ...toUpdate };
+    const index = this.allTasks.findIndex((task) => task.id === taskId);
+    this.allTasks[index] = { ...this.allTasks[index], ...toUpdate };
   };
 
   deleteTask = (taskId: string) => {
-    const index = this.tasks.findIndex((task) => task.id === taskId);
-    this.tasks.splice(index, 1);
+    const index = this.allTasks.findIndex((task) => task.id === taskId);
+    this.allTasks.splice(index, 1);
+  };
+
+  setSearchString = (searchString: string) => {
+    this.searchString = searchString;
   };
 }
